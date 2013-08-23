@@ -36,7 +36,8 @@ class RSolr::Connection
       else
         Net::HTTP.new uri.host, uri.port
       end
-      http.use_ssl = uri.port == 443 || uri.instance_of?(URI::HTTPS)
+      http.use_ssl = uri.port == 443 || uri.port == 8443 || uri.instance_of?(URI::HTTPS)
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       http.read_timeout = read_timeout if read_timeout
       http.open_timeout = open_timeout if open_timeout
       http
